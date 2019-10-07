@@ -1,0 +1,12 @@
+body {
+    background-color: white;
+}
+
+.adminBtn{
+    position: absolute;
+    right: 0px;
+}
+
+h1,h2,h3{
+    color: grey;
+}
