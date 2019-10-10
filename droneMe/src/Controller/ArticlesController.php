@@ -48,8 +48,8 @@ class ArticlesController extends AbstractController
             $manager->persist($article);
             $manager->flush();
 
-            return $this->redirectToRoute('show_article', [
-                'id' => $article->getId()   //recupère l'id de l'article créer pour rediriger directement vers la fonction show et avoir le bon routing
+            return $this->redirectToRoute('showArticle', [
+                'id' => $article->getId()
             ]);
         }
         // if($request->query->count() > 0)
@@ -81,7 +81,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
-     * @Route("/articles/{id}", name="show_article")
+     * @Route("/articles/{id}", name="showArticle")
      */
     // function qui permet d\'afficher un article par son id
     public function show($id)

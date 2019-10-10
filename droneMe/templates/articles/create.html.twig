@@ -3,10 +3,16 @@
 {% block body %}
 
     <h1>Page de création d'article</h1>
-    {{ form_start(formArticle )}}
+        <div class="jumbotron pt-2 pb-2">
+            {{ form_start(formArticle )}}
 
-    {{ form_widget(formArticle) }}
+            {{ form_row(formArticle.title, {'attr' : {'placeholder' : 'Titre de votre Article'}}) }}
 
-    {{ form_end(formArticle) }}
-    
+            {{ form_row(formArticle.content, {'attr' : {'placeholder' : 'Contenu de votre Article'}}) }}
+
+            {{ form_row(formArticle.image) }}
+            {{ form_row(formArticle.save) }}
+
+            {{ form_end(formArticle )}}
+        </div>
 {% endblock %}
