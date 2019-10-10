@@ -1,15 +1,12 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
 {% block body %}
 
     <h1>Page de création d'article</h1>
+    {{ form_start(formArticle )}}
 
-    <form action ="" methode="post">
+    {{ form_widget(formArticle) }}
 
-        <input type="text" name="title" placeholder="article">
-        <textarea name="content" placeholder="Contenu article"></textarea>
-        <input type="text" name="image">
-        <button type="submit">Enregistrer</button>
-    </form>
-
+    {{ form_end(formArticle) }}
+    
 {% endblock %}

@@ -12,6 +12,7 @@
             <img src="{{article.image}}" alt="">
             {{ article.content | raw }}
             <a href="{{ path('show_article', {'id' : article.id}) }}" class="btn btn-primary">Lire la suite</a>
+            <a href="{{ path('deleteArticle', {'id' : article.id}) }}" class="btn btn-danger">Supprimer</a>
         </div>
     </article>
 {% endfor %}
