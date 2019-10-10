@@ -15,9 +15,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class ArticlesController extends AbstractController
 {
     /**
-     * @Route("/articles", name="articles")
+     * @Route("/allArticles", name="allArticles")
      */
-    public function articles(ArticleRepository $repo)   //injection de dépendance ici 
+    public function showAllArticle(ArticleRepository $repo)   //injection de dépendance ici 
     {
         // $repo =  $this->getDoctrine()->getRepository(Article::Class);  cette ligne n'est plus utile grâce à l'injection de dépendance (plus haut)
         $articles = $repo->findAll(); //methode qui permet de récupéré tout les élements de la base de donnée 
@@ -48,7 +48,9 @@ class ArticlesController extends AbstractController
             $manager->persist($article);
             $manager->flush();
 
-            return $this->redirectToRoute('accueil');
+            return $this->redirectToRoute('show_article', [
+                'id' => $article->getId()   //recupère l'id de l'article créer pour rediriger directement vers la fonction show et avoir le bon routing
+            ]);
         }
         // if($request->query->count() > 0)
         // {
@@ -75,7 +77,7 @@ class ArticlesController extends AbstractController
         $article = $repo->find($id);
         $manager->remove($article);
         $manager->flush();
-        return $this->redirectToRoute('accueil');
+        return $this->redirectToRoute('allArticles');
     }
 
     /**
@@ -86,6 +88,7 @@ class ArticlesController extends AbstractController
     {
         $repo = $this->getDoctrine()->getRepository(Article::class);
         $article = $repo->find($id);
+        
         return $this->render('articles/show.html.twig', [
             'article' => $article
         ]);
