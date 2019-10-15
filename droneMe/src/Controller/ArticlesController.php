@@ -35,7 +35,7 @@ class ArticlesController extends AbstractController
      */
     public function formCreateEdit(Article $article = null, Request $request, ObjectManager $manager) //injection de dépendance pour récupérer la requête HTTP et pour solliciter le Manager, Article $article permet de trouver l'article passé par l'id dans la route afin d'afficher les données de chaque article dans les champs, le = null permet ici de ne pas avoir un erreur si nous voulons utiliser la route /articles/create pour creer un article.
     {
-        if(!$article)
+        if(!$article) //si l'article n'existe pas alors on créé un nouvelle article vide.
         {
             $article = new Article();
         }
@@ -56,15 +56,15 @@ class ArticlesController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            if(!$article->getId())
+            if(!$article->getId()) //permet de voir si un article existe si non alors on lui met un DateTime.
             {
                 $article->setCreatedAt(new \DateTime());
             }
-            $manager->persist($article);
-            $manager->flush();
+            $manager->persist($article); //persist en base de donnée
+            $manager->flush(); //envoi des data
 
             return $this->redirectToRoute('showArticle', [
-                'id' => $article->getId()
+                'id' => $article->getId() //redirect vers la function show article mais besoin de l'id ( voir function show)
             ]);
         }
         //method sans vérification des données 
@@ -79,9 +79,9 @@ class ArticlesController extends AbstractController
         //     $manager->flush();
         // }
 
-        return $this->render('articles/create.html.twig', [
+        return $this->render('articles/formArticle.html.twig', [
             'formArticle' => $form->createView(),
-            'editMode' => $article->getId() !== null
+            'editMode' => $article->getId() !== null //permet d'afficher un bouton différent dans le template si on est en edit mode ou en create ( voir create.html.twig)
         ]);
     }
 
@@ -102,7 +102,7 @@ class ArticlesController extends AbstractController
      * @Route("/articles/{id}", name="showArticle")
      */
     // function qui permet d\'afficher un article par son id
-    public function show($id)
+    public function showArticle($id)
     {
         $repo = $this->getDoctrine()->getRepository(Article::class);
         $article = $repo->find($id);

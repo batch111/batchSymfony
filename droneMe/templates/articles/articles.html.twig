@@ -12,7 +12,9 @@
             <img src="{{article.image}}" alt="">
             <p> {{ article.content | raw }} </p>
            <p><a href="{{ path('showArticle', {'id' : article.id}) }}" class="btn btn-primary">Lire la suite</a></p>
-            <p><a href="{{ path('deleteArticle', {'id' : article.id}) }}" class="btn btn-danger">Supprimer</a></p>
+           <div>
+                <p><a href="{{ path('articleEdit', {'id' : article.id}) }}" class="btn btn-success mr-2">Modifier</a><a href="{{ path('deleteArticle', {'id' : article.id}) }}" class="btn btn-danger">Supprimer</a></p>
+           <div>
         </div>
     </article>
 {% endfor %}
