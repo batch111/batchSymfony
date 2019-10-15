@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Article;
+use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -14,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ArticlesController extends AbstractController
 {
+    
     /**
      * @Route("/allArticles", name="allArticles")
      */
@@ -29,22 +31,35 @@ class ArticlesController extends AbstractController
 
     /**
      * @Route("/articles/create", name="articleCreate")
+     * @Route("/articles/{id}/edit", name="articleEdit")
      */
-    public function createArticle(Request $request, ObjectManager $manager) //injection de dépendance pour récupérer la requête HTTP et pour solliciter le Manager
+    public function formCreateEdit(Article $article = null, Request $request, ObjectManager $manager) //injection de dépendance pour récupérer la requête HTTP et pour solliciter le Manager, Article $article permet de trouver l'article passé par l'id dans la route afin d'afficher les données de chaque article dans les champs, le = null permet ici de ne pas avoir un erreur si nous voulons utiliser la route /articles/create pour creer un article.
     {
-        $article = new Article;
-        $form = $this->createFormBuilder($article)
-            ->add('title', TextType::class)
-            ->add('content', TextareaType::class)
-            ->add('image', TextType::class)
-            ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
-            ->getForm();
+        if(!$article)
+        {
+            $article = new Article();
+        }
 
+        // methode en écrivant nous même les différents champs du form (non optimisé)
+        // $form = $this->createFormBuilder($article)
+        //     ->add('title', TextType::class)
+        //     ->add('content', TextareaType::class)
+        //     ->add('image', TextType::class)
+        //     ->getForm();
+
+        //methode grâce au CLI permet de générer automatiquement un form à partir d'une class ( Artcile ici)
+        //permet également de ne pas dupliquer du code et d'avoir un code propre
+        $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
+
         dump($article);
+
         if($form->isSubmitted() && $form->isValid())
         {
-            $article->setCreatedAt(new \DateTime());
+            if(!$article->getId())
+            {
+                $article->setCreatedAt(new \DateTime());
+            }
             $manager->persist($article);
             $manager->flush();
 
@@ -52,6 +67,7 @@ class ArticlesController extends AbstractController
                 'id' => $article->getId()
             ]);
         }
+        //method sans vérification des données 
         // if($request->query->count() > 0)
         // {
         //     $article = new Article();
@@ -64,9 +80,11 @@ class ArticlesController extends AbstractController
         // }
 
         return $this->render('articles/create.html.twig', [
-            'formArticle' => $form->createView()
+            'formArticle' => $form->createView(),
+            'editMode' => $article->getId() !== null
         ]);
     }
+
     /**
      * @Route("/articles/delete/{id}", name="deleteArticle")
      */

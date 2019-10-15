@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+//ajout des contraintes directement dans la class de l'Article
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -18,16 +21,19 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min = 5, max = 50, minMessage ="TAMERE")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min = 10)
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Assert\Url  
      */
     private $image;
 

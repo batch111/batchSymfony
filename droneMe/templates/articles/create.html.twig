@@ -11,8 +11,18 @@
             {{ form_row(formArticle.content, {'attr' : {'placeholder' : 'Contenu de votre Article'}}) }}
 
             {{ form_row(formArticle.image) }}
-            {{ form_row(formArticle.save) }}
 
+{# Ici le nom du button change si nous somme en editMode ou non #}
+            
+            <div class="text-center"> 
+                    <button type="submit" class="btn btn-success center-block">
+                            {% if editMode %}
+                                Enregistrer
+                            {% else %}
+                                Ajout de l'article
+                            {% endif %}
+                        </button>
+                </div>
             {{ form_end(formArticle )}}
         </div>
 {% endblock %}
