@@ -1,0 +1,20 @@
+language: php
+php:
+  - 7.1.9
+# cache: npm
+
+# install:
+#   -npm install
+
+script:
+ - droneMe/vendor/bin/phpunit
+#   -npm test
+#   -npm run build
+
+# deploy:
+#   provider: pages
+#   skip-cleanup: true
+#   github-token: $GITHUB_TOKEN
+#   on:
+#     branch: master
+
