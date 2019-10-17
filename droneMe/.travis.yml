@@ -1,14 +1,14 @@
 language: php
 php:
   - 7.1.9
-cache: yarn
+cache: npm
 
 install:
-  -yarn install
+  -npm install
 
 script:
-  -yarn test
-  -yarn run build
+  -npm test
+  -npm run build
 
 deploy:
   provider: pages
