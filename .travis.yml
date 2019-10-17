@@ -1,8 +1,9 @@
 language: php
 php:
   - 7.1.9
-install:
- - composer install
+before_script:
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
 # Run script
 script:
  - phpunit
