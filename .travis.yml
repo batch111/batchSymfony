@@ -1,6 +1,8 @@
 language: php
 php:
   - 7.1.9
-script:
+install:
  - composer install
- - vendor/bin/phpunit
+# Run script
+script:
+ - phpunit
