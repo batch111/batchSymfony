@@ -50,18 +50,4 @@ install:
   - php -r "echo ini_get('memory_limit').PHP_EOL;"
 
 script:
-  - php ./bin/phpunit
-  # this checks that the source code follows the Symfony Code Syntax rules
-  - '[[ "$TRAVIS_PHP_VERSION" == "7.4snapshot" ]] || ./vendor/bin/php-cs-fixer fix --diff --dry-run -v'
-  # this checks that the YAML config files contain no syntax errors
-  - ./bin/console lint:yaml config --parse-tags
-  # this checks that the Twig template files contain no syntax errors
-  - ./bin/console lint:twig templates --env=prod
-  # this checks that the XLIFF translations contain no syntax errors
-  - ./bin/console lint:xliff translations
-  # this checks that the application doesn't use dependencies with known security vulnerabilities
-  - ./bin/console security:check
-  # this checks that Doctrine's mapping configurations are valid
-  - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
-  #  Fail CI if the repo is in a dirty state after building assets (only for current release ie install)
-  -  if [[ "$ACTION" == "install" ]]; then yarn install && yarn encore production && git add --all && git diff --staged --exit-code; fi
+  - vendor/bin/phpunit
