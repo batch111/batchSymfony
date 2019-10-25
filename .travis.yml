@@ -48,9 +48,6 @@ before_install:
 
 install:
   - php -r "echo ini_get('memory_limit').PHP_EOL;"
-  # install or update
-  - composer $ACTION
-  - ./bin/phpunit install
 
 script:
   - php ./bin/phpunit
