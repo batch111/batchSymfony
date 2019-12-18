@@ -3,20 +3,27 @@
 {% block title %}Articles{% endblock %}
 
 {% block body %}
-<section class="articles">
-{% for article in articles %} 
-    <article>
-        <h3>{{ article.title }}</h3>
-        <div class="metadata">{{article.createdAt | date('d/m/Y') }}</div>
-        <div class="content">
-            <img src="{{article.image}}" alt="">
-            <p> {{ article.content | raw }} </p>
-           <p><a href="{{ path('showArticle', {'id' : article.id}) }}" class="btn btn-primary">Lire la suite</a></p>
-           <div>
-                <p><a href="{{ path('articleEdit', {'id' : article.id}) }}" class="btn btn-success mr-2">Modifier</a><a href="{{ path('deleteArticle', {'id' : article.id}) }}" class="btn btn-danger">Supprimer</a></p>
-           <div>
+<h3 class="text-center"> Nos articles :</h3>
+    <div class="container">
+        <div class=" d-flex flex-row flex-wrap">
+            {% for article in articles %} 
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="card my-2">
+                                    <div class="mx-3 my-3">
+                                        <img class="card-img-top" src="{{article.image}}" alt="Card image cap">
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <p class="card-title">{{ article.title }}<p5>
+                                        <div class="metadata">{{article.createdAt | date('d/m/Y') }}</div>
+                                    </div>
+                                    <div class="mt-4 text-center mb-2">
+                                        <a href="{{ path('showArticle', {'id' : article.id}) }}" class="btn btn-primary">Lire la suite</a>
+                                        <a href="{{ path('articleEdit', {'id' : article.id}) }}" class="btn btn-success">Modifier</a>
+                                        <a href="{{ path('deleteArticle', {'id' : article.id}) }}" class="btn btn-danger"><img src="{{asset('/images/croix.png')}}" alt="icone"/></a>
+                                    </div>
+                                </div>
+                            </div>	 	
+            {% endfor %}
         </div>
-    </article>
-{% endfor %}
-</section>
+    </div>
 {% endblock %}

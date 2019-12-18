@@ -19,19 +19,19 @@ class ArticlesController extends AbstractController
     /**
      * @Route("/allArticles", name="allArticles")
      */
-    public function showAllArticle(ArticleRepository $repo)   //injection de dépendance ici 
+    public function showAllArticle(ArticleRepository $repo)   //injection de dépendance ici dans la variable $repo
     {
         // $repo =  $this->getDoctrine()->getRepository(Article::Class);  cette ligne n'est plus utile grâce à l'injection de dépendance (plus haut)
         $articles = $repo->findAll(); //methode qui permet de récupéré tout les élements de la base de donnée 
-        return $this->render('articles/articles.html.twig', [
+        return $this->render('articles/articles.html.twig', [   
             'controller_name' => 'BlogController',
             'articles' => $articles,
-        ]); 
+        ]); //ici 'render' permet de faire appel  twig le moteur de template grâce à l'éritage de la class AbstracController
     }
 
     /**
      * @Route("/articles/create", name="articleCreate")
-     * @Route("/articles/{id}/edit", name="articleEdit")
+     * @Route("/articles/{id}/edit", name="articleEdit") 
      */
     public function formCreateEdit(Article $article = null, Request $request, ObjectManager $manager) //injection de dépendance pour récupérer la requête HTTP et pour solliciter le Manager, Article $article permet de trouver l'article passé par l'id dans la route afin d'afficher les données de chaque article dans les champs, le = null permet ici de ne pas avoir un erreur si nous voulons utiliser la route /articles/create pour creer un article.
     {
@@ -88,7 +88,6 @@ class ArticlesController extends AbstractController
     /**
      * @Route("/articles/delete/{id}", name="deleteArticle")
      */
-    // function qui permet d\'afficher un article par son id
     public function deleteArticle($id, ObjectManager $manager)
     {
         $repo = $this->getDoctrine()->getRepository(Article::class);
@@ -108,7 +107,7 @@ class ArticlesController extends AbstractController
         $article = $repo->find($id);
         
         return $this->render('articles/show.html.twig', [
-            'article' => $article
+            'article' => $article //passage de la clef article qui prend en valeur le contenu de $article (ici donc l'article en question avecson $id)
         ]);
     }
 }

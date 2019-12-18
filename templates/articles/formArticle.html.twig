@@ -1,8 +1,11 @@
 {% extends 'base.html.twig' %}
 {% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-
-    <h1>Page de création d'article</h1>
+    {% if editMode %}
+        <h1 class="text-center">Mise à jour de votre Article</h1>
+    {% else %}
+        <h1 class="text-center">Créer votre Article</h1>
+    {% endif %}
         <div class="jumbotron pt-2 pb-2">
             {{ form_start(formArticle )}}
 

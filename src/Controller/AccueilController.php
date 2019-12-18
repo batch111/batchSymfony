@@ -16,7 +16,7 @@ class AccueilController extends AbstractController
     {
         //variable
         return $this->render('Accueil/accueil.html.twig', [
-            'title' => "Bienvenue sur ma page d'accueil"
+            'title' => "Drone/ME"
         ]);
     }
 }

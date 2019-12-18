@@ -14,14 +14,15 @@
 
     <section id="commentaires">
         {% for comment in article.comments %}
-        <div class="comment">
+        <div class="comment jumbotron">
             <div class="row">
-                <div class="col-3">
-                    {{ comment.author }}(<small>{{ comment.createtdAt | date('d/m/Y à H:i') }}</small>)
+                <div class="col-3 border-right text-center">
+                    <h5>{{ comment.author }}</h5>(<small>{{ comment.createtdAt | date('d/m/Y à H:i') }}</small>)
                 </div>
-                <div class="border border-secondary m-3 p-3">
+                <div class="col-9 ">
                     {{ comment.content | raw }}
                 </div>
+                     <button class="btn btn-primary btn-sm">LIKE</button>
             </div>
         </div>
         {% endfor %}
